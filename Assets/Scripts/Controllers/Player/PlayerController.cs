@@ -1,16 +1,16 @@
-﻿using Assets.Scripts.Data;
+﻿using Assets.Scripts.Components;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Player
 {
     public class PlayerController : MonoBehaviour
     {
-        private PlayerData _playerData;
+        private PlayerComponent _player;
 
 
         private void Start()
         {
-            _playerData = GetComponent<PlayerData>();
+            _player = GetComponent<PlayerComponent>();
         }
     }
 }

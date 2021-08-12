@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Data;
+using UnityEngine;
 
-namespace Assets.Scripts.Data
+namespace Assets.Scripts.Components
 {
     [DefaultExecutionOrder(-10)]
-    public class PlayerData : MonoBehaviour
+    public class PlayerComponent : MonoBehaviour
     {
         [field: SerializeField]
         public string Name { get; private set; }

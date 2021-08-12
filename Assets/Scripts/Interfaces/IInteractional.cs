@@ -1,11 +1,11 @@
-﻿using Assets.Scripts.Data;
+﻿using Assets.Scripts.Components;
 
 namespace Assets.Scripts.Interfaces
 {
     public interface IInteractional
     {
-        void StartInteraction(PlayerData player);
-        void Interact(PlayerData player);
-        void FinishInteraction(PlayerData player);
+        void StartInteraction(PlayerComponent player);
+        void Interact(PlayerComponent player);
+        void FinishInteraction(PlayerComponent player);
     }
 }

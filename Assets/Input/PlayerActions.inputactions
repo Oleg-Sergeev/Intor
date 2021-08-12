@@ -2,7 +2,7 @@
     "name": "PlayerActions",
     "maps": [
         {
-            "name": "PlayerControls",
+            "name": "Main",
             "id": "2903e9fc-969e-469f-9eca-167d653520b0",
             "actions": [
                 {
@@ -10,6 +10,14 @@
                     "type": "Value",
                     "id": "f6d0c50f-2f8e-4622-9b3a-47bf401b6a44",
                     "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Inventory",
+                    "type": "Button",
+                    "id": "7a94eec4-ad3d-4772-ad24-c8ab7ae102e0",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 }
@@ -78,6 +86,28 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "88fe5ce1-2a7a-46db-b26a-ea24e0d9626e",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f668f8cf-25d8-4439-b3d6-fee6e19a8831",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Inventory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

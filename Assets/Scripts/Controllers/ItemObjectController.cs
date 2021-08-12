@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Data;
+﻿using Assets.Scripts.Components;
+using Assets.Scripts.Data;
 using Assets.Scripts.Data.Items;
 using Assets.Scripts.Interfaces;
 using UnityEngine;
@@ -29,8 +30,10 @@ namespace Assets.Scripts.Controllers
         }
 
 
-        public void StartInteraction(PlayerData player)
+        public void StartInteraction(PlayerComponent player)
         {
+            if (_isDeleted) return;
+
             _itemUI.PickUp.onClick.RemoveAllListeners();
             _itemUI.PickUp.interactable = player.Inventory.HasEmptySpace(_item);
             _itemUI.PickUp.onClick.AddListener(() => Interact(player));
@@ -38,7 +41,7 @@ namespace Assets.Scripts.Controllers
             _canvasItemUI.SetActive(true);
         }
 
-        public void Interact(PlayerData player)
+        public void Interact(PlayerComponent player)
         {
             player.Inventory.Add(_item);
 
@@ -50,7 +53,7 @@ namespace Assets.Scripts.Controllers
             _isDeleted = true;
         }
 
-        public void FinishInteraction(PlayerData player)
+        public void FinishInteraction(PlayerComponent player)
         {
             _itemUI.PickUp.onClick.RemoveAllListeners();
 

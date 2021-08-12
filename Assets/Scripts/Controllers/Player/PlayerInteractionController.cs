@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Assets.Scripts.Components;
 using Assets.Scripts.Data;
 using Assets.Scripts.Interfaces;
 using UnityEngine;
@@ -8,7 +9,7 @@ namespace Assets.Scripts.Controllers.Player
     public class PlayerInteractionController : MonoBehaviour
     {
         [SerializeField]
-        private PlayerData _player;
+        private PlayerComponent _player;
 
         private HashSet<Collider> _overlaps;
 
