@@ -1,6 +1,6 @@
 ﻿using Assets.Scripts.Components;
-using Assets.Scripts.Data;
 using Assets.Scripts.Data.Items;
+using Assets.Scripts.Data.UI;
 using Assets.Scripts.Interfaces;
 using UnityEngine;
 

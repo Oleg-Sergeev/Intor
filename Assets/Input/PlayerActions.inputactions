@@ -7,9 +7,9 @@
             "actions": [
                 {
                     "name": "Movement",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "f6d0c50f-2f8e-4622-9b3a-47bf401b6a44",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 },
@@ -17,6 +17,14 @@
                     "name": "Inventory",
                     "type": "Button",
                     "id": "7a94eec4-ad3d-4772-ad24-c8ab7ae102e0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Test",
+                    "type": "Button",
+                    "id": "852d6cf7-b6c1-4a69-91a6-5ea715e5a19b",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -108,6 +116,17 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a24c727e-7e9f-49e0-a50a-51325e3affa2",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Test",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

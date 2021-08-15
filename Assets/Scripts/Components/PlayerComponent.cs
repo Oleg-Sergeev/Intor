@@ -16,5 +16,12 @@ namespace Assets.Scripts.Components
         {
             Inventory = new Inventory();
         }
+
+        public void Clear()
+        {
+            var t1 = Inventory.GetItems();
+            var t = t1?.Count > 0 ? t1[0] : null;
+            Inventory.Remove(t);
+        }
     }
 }

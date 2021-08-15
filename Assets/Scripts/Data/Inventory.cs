@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Data.Items;
@@ -30,11 +29,13 @@ namespace Assets.Scripts.Data
 
         public IList<Slot> GetSlots() => _slots.Values.ToList();
 
+        public IList<Item> GetItems() => _slots.Values.Select(s => s.Item)?.ToList();
+
 
         public bool HasEmptySpace(Item sameItem = null) => CurrentSize < TotalSize || (sameItem != null && _slots.ContainsKey(sameItem.Id));
 
 
-        public bool HasItem(Item templateItem) => _slots.ContainsKey(templateItem.Id);
+        public bool HasItem(Item templateItem) => templateItem != null && _slots.ContainsKey(templateItem.Id);
 
 
 

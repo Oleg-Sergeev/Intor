@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.Data
+namespace Assets.Scripts.Data.UI
 {
     [Serializable]
     public class ItemUI
