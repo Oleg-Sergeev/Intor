@@ -20,12 +20,16 @@ namespace Assets.Scripts.Data.UI
         [field: SerializeField]
         public Button ButtonLock { get; private set; }
 
+        [field: SerializeField]
+        public Button ButtonHack { get; private set; }
+
 
         public void ResetButtons()
         {
             ButtonOpen.Reset();
             ButtonClose.Reset();
             ButtonLock.Reset();
+            ButtonHack.Reset();
         }
     }
 }

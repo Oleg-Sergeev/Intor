@@ -16,7 +16,7 @@ namespace Assets.Scripts.Controllers.UI
             IsCanvasEnabled = Canvas.enabled;
         }
 
-
+        [ContextMenu("Toggle")]
         public virtual void Toggle()
         {
             IsCanvasEnabled = !IsCanvasEnabled;

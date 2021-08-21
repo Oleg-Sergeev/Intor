@@ -3,6 +3,7 @@ using Assets.Scripts.Data.Items;
 using Assets.Scripts.Data.UI;
 using Assets.Scripts.Extensions;
 using Assets.Scripts.Interfaces;
+using Assets.Scripts.Utilities;
 using UnityEngine.Events;
 
 namespace Assets.Scripts.States.Door
@@ -20,26 +21,26 @@ namespace Assets.Scripts.States.Door
 
         public override void Close()
         {
-            UnityEngine.Debug.Log("Door closed");
+            GameDebugger.Log("Door closed");
 
             StateSwitcher.SwitchState<ClosedDoorState>();
         }
 
         public override void Lock()
         {
-            UnityEngine.Debug.Log("Door locked");
+            GameDebugger.Log("Door locked");
 
             StateSwitcher.SwitchState<LockedDoorState>();
         }
 
         public override void HandleUI(DoorUI doorUI, bool hasKey, params UnityAction[] callbacks)
         {
-            doorUI.ButtonClose.AddListenersAndEnable(Close);
+            doorUI.ButtonClose.AddListenersWithEnable(Close);
             doorUI.ButtonClose.AddListeners(callbacks);
 
             if (hasKey)
             {
-                doorUI.ButtonLock.AddListenersAndEnable(Lock);
+                doorUI.ButtonLock.AddListenersWithEnable(Lock);
                 doorUI.ButtonLock.AddListeners(callbacks);
             }
         }

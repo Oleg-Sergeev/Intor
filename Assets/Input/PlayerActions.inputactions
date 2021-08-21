@@ -20,14 +20,6 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
-                },
-                {
-                    "name": "Test",
-                    "type": "Button",
-                    "id": "852d6cf7-b6c1-4a69-91a6-5ea715e5a19b",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -118,17 +110,88 @@
                     "action": "Inventory",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
+                }
+            ]
+        },
+        {
+            "name": "PuzzleDoorMechanical",
+            "id": "8a418d4b-edb1-4dc7-94d9-065b9fc3907a",
+            "actions": [
                 {
-                    "name": "",
-                    "id": "a24c727e-7e9f-49e0-a50a-51325e3affa2",
-                    "path": "<Keyboard>/space",
+                    "name": "PointMovement",
+                    "type": "Button",
+                    "id": "6706b1f9-4218-4cbe-b2f8-e06331b38a8f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "1D Axis Keyboard",
+                    "id": "a048cce5-9698-46e9-b977-9e92c8b1833e",
+                    "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Test",
-                    "isComposite": false,
+                    "action": "PointMovement",
+                    "isComposite": true,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "05ed73cb-0de7-47be-b3e4-fb5efdafc908",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "PointMovement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "8d55a774-5090-496d-8829-de87f4cc4701",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "PointMovement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "1D Axis Gamepad",
+                    "id": "1af4e5c2-76fd-40d2-93bd-58a7321b7d9b",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PointMovement",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "cdbe5496-d12a-47e0-a7b6-967875df5227",
+                    "path": "<Gamepad>/leftStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "PointMovement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "ca572a3c-9271-4395-973e-42bc44344ea4",
+                    "path": "<Gamepad>/leftStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "PointMovement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }

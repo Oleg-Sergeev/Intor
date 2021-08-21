@@ -1,6 +1,6 @@
 ﻿namespace Assets.Scripts.Controllers.UI
 {
-    internal class UIGameplayController : UIBaseController
+    public class UIGameplayController : UIBaseController
     {
     }
 }

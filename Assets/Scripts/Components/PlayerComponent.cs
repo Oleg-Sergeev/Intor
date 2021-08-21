@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Data;
+using Assets.Scripts.Utilities;
 using UnityEngine;
 
 namespace Assets.Scripts.Components
@@ -15,13 +16,6 @@ namespace Assets.Scripts.Components
         private void Awake()
         {
             Inventory = new Inventory();
-        }
-
-        public void Clear()
-        {
-            var t1 = Inventory.GetItems();
-            var t = t1?.Count > 0 ? t1[0] : null;
-            Inventory.Remove(t);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Assets.Scripts.Extensions
                 button.onClick.AddListener(action);
         }
 
-        public static void AddListenersAndEnable(this Button button, params UnityAction[] listeners)
+        public static void AddListenersWithEnable(this Button button, params UnityAction[] listeners)
         {
             button.interactable = true;
 
