@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets.Scripts.Components;
 using Assets.Scripts.Controllers.UI.Puzzles.Doors;
 using Assets.Scripts.Data.Items;
 using Assets.Scripts.Data.Puzzles.Doors;
 using Assets.Scripts.Data.UI;
+using Assets.Scripts.Extensions;
 using Assets.Scripts.Interfaces;
 using Assets.Scripts.States.Door;
 using UnityEngine;
-using UnityEngine.Events;
 
-namespace Assets.Scripts.Components
+namespace Assets.Scripts.Door.Controllers
 {
-    [Serializable]
-    public class DoorComponent : MonoBehaviour, IDoorStateSwitcher
+    public class DoorController : MonoBehaviour, IDoorStateSwitcher, IInteractional
     {
         private BaseDoorState _currentState;
 
@@ -26,6 +26,9 @@ namespace Assets.Scripts.Components
 
         [SerializeField]
         private UIDoorBaseHackController _doorHackable;
+
+        [SerializeField]
+        private DoorUI _doorUI;
 
         [SerializeField]
         private States _startState;
@@ -47,35 +50,53 @@ namespace Assets.Scripts.Components
                 case States.Locked: SwitchState<LockedDoorState>(); break;
                 default: throw new ArgumentException("Unknown state", nameof(_startState));
             }
+
+            if (_requiredKey == null)
+            {
+                _doorUI.HideLockAndHackButtons();
+
+                if (_startState == States.Locked)
+                    SwitchState<ClosedDoorState>();
+            }
+
+            _doorUI.Canvas.enabled = false;
         }
 
-
-        public void Open()
-        {
-            _currentState.Open();
-        }
-
-        public void Close()
-        {
-            _currentState.Close();
-        }
-
-        public void Lock()
-        {
-            _currentState.Lock();
-        }
-
-        public void HandleUI(DoorUI doorUI, PlayerComponent player, params UnityAction[] callbacks)
-        {
-            var hasKey = player.Inventory.HasItem(_requiredKey);
-
-            _currentState.HandleUI(doorUI, hasKey, callbacks);
-        }
 
         public void SwitchState<T>() where T : BaseDoorState
         {
             var newState = _allStates.Find(state => state is T);
             _currentState = newState;
+
+
+
+
+            //???
+            if (_currentState is OpenedDoorState) transform.parent.TranslateTo(Quaternion.Euler(0, -90, 0));
+            else transform.parent.TranslateTo(Quaternion.Euler(0, 0, 0));
+        }
+
+
+        public void StartInteraction(PlayerComponent player)
+        {
+            _doorUI.Canvas.enabled = true;
+
+            _doorUI.ResetButtons();
+
+
+            var hasKey = player.Inventory.HasItem(_requiredKey);
+
+            _currentState.HandleUI(_doorUI, hasKey, () => Interact(player));
+        }
+
+        public void Interact(PlayerComponent player)
+        {
+            StartInteraction(player);
+        }
+
+        public void FinishInteraction(PlayerComponent player)
+        {
+            _doorUI.Canvas.enabled = false;
         }
 
 

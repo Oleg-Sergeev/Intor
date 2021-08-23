@@ -3,7 +3,7 @@ using Assets.Scripts.Data.Items;
 using Assets.Scripts.Data.UI;
 using Assets.Scripts.Extensions;
 using Assets.Scripts.Interfaces;
-using Assets.Scripts.Utilities;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Assets.Scripts.States.Door
@@ -17,7 +17,7 @@ namespace Assets.Scripts.States.Door
 
         public override void Open()
         {
-            GameDebugger.Log("Door opened");
+            Debug.Log("Door opened");
 
             StateSwitcher.SwitchState<OpenedDoorState>();
         }
@@ -29,7 +29,7 @@ namespace Assets.Scripts.States.Door
 
         public override void Lock()
         {
-            GameDebugger.Log("Door locked");
+            Debug.Log("Door locked");
 
             StateSwitcher.SwitchState<LockedDoorState>();
         }

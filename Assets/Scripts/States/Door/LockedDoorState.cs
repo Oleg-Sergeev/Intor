@@ -1,10 +1,9 @@
-﻿using System;
-using Assets.Scripts.Data.Items;
+﻿using Assets.Scripts.Data.Items;
 using Assets.Scripts.Data.Puzzles.Doors;
 using Assets.Scripts.Data.UI;
 using Assets.Scripts.Extensions;
 using Assets.Scripts.Interfaces;
-using Assets.Scripts.Utilities;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Assets.Scripts.States.Door
@@ -25,21 +24,21 @@ namespace Assets.Scripts.States.Door
 
         public override void Open()
         {
-            GameDebugger.Log("Door opened");
+            Debug.Log("Door opened");
 
             StateSwitcher.SwitchState<OpenedDoorState>();
         }
 
         public override void Close()
         {
-            GameDebugger.Log("Door unlocked");
+            Debug.Log("Door unlocked");
 
             StateSwitcher.SwitchState<ClosedDoorState>();
         }
 
         public override void Lock()
         {
-            GameDebugger.Log("Door already locked");
+            Debug.Log("Door already locked");
         }
 
         private void Hack(params UnityAction[] callbacks)

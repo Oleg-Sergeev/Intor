@@ -8,7 +8,6 @@ namespace Assets.Scripts.Controllers.Player
 {
     public class PlayerInteractionController : MonoBehaviour
     {
-        [SerializeField]
         private PlayerComponent _player;
 
         private HashSet<Collider> _overlaps;
@@ -16,6 +15,8 @@ namespace Assets.Scripts.Controllers.Player
 
         private void Awake()
         {
+            _player = transform.parent.GetComponent<PlayerComponent>();
+
             _player.Inventory.SlotAdded += OnSlotAddedOrRemoved;
             _player.Inventory.SlotRemoved += OnSlotAddedOrRemoved;
         }

@@ -4,7 +4,7 @@ namespace Assets.Scripts.Controllers.UI
 {
     public class UIBaseController : MonoBehaviour
     {
-        protected bool IsCanvasEnabled { get; set; }
+        public bool IsCanvasEnabled { get; protected set; }
 
         protected Canvas Canvas { get; set; }
 

@@ -31,5 +31,11 @@ namespace Assets.Scripts.Data.UI
             ButtonLock.Reset();
             ButtonHack.Reset();
         }
+
+        public void HideLockAndHackButtons()
+        {
+            ButtonLock.gameObject.SetActive(false);
+            ButtonHack.gameObject.SetActive(false);
+        }
     }
 }

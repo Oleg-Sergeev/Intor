@@ -10,8 +10,9 @@ namespace Assets.Scripts.Controllers.Player
         [SerializeField]
         private MoveSettings _moveSettings;
 
-
         private Rigidbody _rigidbody;
+
+        private Transform _cameraTransform;
 
 
         private Vector3 _rawMovementDirection;
@@ -21,6 +22,8 @@ namespace Assets.Scripts.Controllers.Player
         private void Start()
         {
             _rigidbody = GetComponent<Rigidbody>();
+
+            _cameraTransform = Camera.main.transform;
         }
 
 
@@ -81,8 +84,8 @@ namespace Assets.Scripts.Controllers.Player
 
         private Vector3 NormilizeCameraDirection(Vector3 movementDirection)
         {
-            var cameraForward = Camera.main.transform.forward;
-            var cameraRight = Camera.main.transform.right;
+            var cameraForward = _cameraTransform.forward;
+            var cameraRight = _cameraTransform.right;
 
             cameraForward.y = 0f;
             cameraRight.y = 0f;

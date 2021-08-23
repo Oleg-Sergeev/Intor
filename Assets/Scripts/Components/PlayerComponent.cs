@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Data;
-using Assets.Scripts.Utilities;
 using UnityEngine;
 
 namespace Assets.Scripts.Components

@@ -1,9 +1,8 @@
-﻿using System;
-using Assets.Scripts.Data.Items;
+﻿using Assets.Scripts.Data.Items;
 using Assets.Scripts.Data.UI;
 using Assets.Scripts.Extensions;
 using Assets.Scripts.Interfaces;
-using Assets.Scripts.Utilities;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Assets.Scripts.States.Door
@@ -16,19 +15,19 @@ namespace Assets.Scripts.States.Door
 
         public override void Open()
         {
-            throw new NotImplementedException();
+            Debug.Log("Door already locked");
         }
 
         public override void Close()
         {
-            GameDebugger.Log("Door closed");
+            Debug.Log("Door closed");
 
             StateSwitcher.SwitchState<ClosedDoorState>();
         }
 
         public override void Lock()
         {
-            GameDebugger.Log("Door locked");
+            Debug.Log("Door locked");
 
             StateSwitcher.SwitchState<LockedDoorState>();
         }

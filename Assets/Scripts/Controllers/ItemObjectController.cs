@@ -32,8 +32,6 @@ namespace Assets.Scripts.Controllers
 
         public void StartInteraction(PlayerComponent player)
         {
-            if (_isDeleted) return;
-
             _itemUI.PickUp.onClick.RemoveAllListeners();
             _itemUI.PickUp.interactable = player.Inventory.HasEmptySpace(_item);
             _itemUI.PickUp.onClick.AddListener(() => Interact(player));

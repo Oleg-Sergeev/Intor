@@ -11,10 +11,11 @@ namespace Assets.Scripts.Data.Items
         [field: SerializeField]
         public string Name { get; set; }
 
-        
+        [field: SerializeField]
+        [field: TextArea]
         public string Description { get; private set; }
 
-
-
+        [field: SerializeField]
+        public Sprite Icon { get; private set; }
     }
 }
