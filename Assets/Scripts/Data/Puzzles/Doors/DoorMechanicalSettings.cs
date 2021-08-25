@@ -16,6 +16,9 @@ namespace Assets.Scripts.Data.Puzzles.Doors
         public int PointSpeed { get; private set; }
 
         [field: SerializeField]
+        public float PointSmoothness { get; private set; }
+
+        [field: SerializeField]
         public float HandleReverseTime { get; private set; }
 
         [field: SerializeField]
@@ -23,5 +26,12 @@ namespace Assets.Scripts.Data.Puzzles.Doors
 
         [field: SerializeField]
         public float HandleReverseSpeed { get; private set; }
+
+        [field: SerializeField]
+        public MovementFunc HandleMovementFunc { get; private set; }
+
+
+        [Serializable]
+        public class MovementFunc : SerializableCallback<float, float> { }
     }
 }

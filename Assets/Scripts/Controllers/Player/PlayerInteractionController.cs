@@ -35,12 +35,15 @@ namespace Assets.Scripts.Controllers.Player
 
         private void OnTriggerEnter(Collider collider)
         {
-            if (collider.GetComponent<IInteractional>() is IInteractional interactional)
-            {
-                _overlaps.Add(collider);
+            if (!(collider.GetComponent<IInteractional>() is IInteractional interactional)) return;
 
-                interactional.StartInteraction(_player);
-            }
+            //var ray = new Ray(transform.position, collider.transform.position - transform.position);
+            //if (Physics.Raycast(ray, out var hit) && hit.collider != collider) return;
+
+
+            _overlaps.Add(collider);
+
+            interactional.StartInteraction(_player);
         }
 
         private void OnTriggerExit(Collider collider)

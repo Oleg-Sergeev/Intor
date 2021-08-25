@@ -63,12 +63,15 @@ namespace Assets.Scripts.Door.Controllers
         }
 
 
+        public void Open() => _currentState.Open();
+        public void Close() => _currentState.Close();
+        public void Lock() => _currentState.Lock();
+
+
         public void SwitchState<T>() where T : BaseDoorState
         {
             var newState = _allStates.Find(state => state is T);
             _currentState = newState;
-
-
 
 
             //???

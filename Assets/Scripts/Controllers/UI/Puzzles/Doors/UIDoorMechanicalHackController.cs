@@ -9,7 +9,7 @@ namespace Assets.Scripts.Controllers.UI.Puzzles.Doors
 {
     public class UIDoorMechanicalHackController : UIDoorBaseHackController
     {
-        private const float Smoothing = 7f;
+        private const float HandleSmoothing = 7f;
 
         [SerializeField]
         private UIGameplayController _gameplayUI;
@@ -25,7 +25,7 @@ namespace Assets.Scripts.Controllers.UI.Puzzles.Doors
 
         private RectTransform _handle;
 
-        private DoorMechanicalSettings _mechanicalSettings;
+        private DoorMechanicalSettings _settings;
 
         private Vector3 _pointRawDirection;
         private Vector3 _pointSmoothDirection;
@@ -81,18 +81,18 @@ namespace Assets.Scripts.Controllers.UI.Puzzles.Doors
 
         private IEnumerator ReverseHandle(float time)
         {
-            while (time > 0f && Canvas.enabled)
+            while (_progressBar.value < _settings.PuzzleTime && time > 0f && Canvas.enabled)
             {
                 yield return null;
 
                 time -= Time.deltaTime;
 
 
-                _handleRawDirection -= _mechanicalSettings.HandleReverseAcceleration * Vector3.right * Time.deltaTime;
+                _handleRawDirection -= _settings.HandleReverseAcceleration * Vector3.right * Time.deltaTime;
 
-                _handleRawDirection = Vector3.ClampMagnitude(_handleRawDirection, _mechanicalSettings.HandleReverseSpeed);
+                _handleRawDirection = Vector3.ClampMagnitude(_handleRawDirection, _settings.HandleReverseSpeed);
 
-                _handleSmoothDirection = Vector3.Lerp(_handleSmoothDirection, _handleRawDirection, Time.deltaTime * Smoothing);
+                _handleSmoothDirection = Vector3.Lerp(_handleSmoothDirection, _handleRawDirection, Time.deltaTime * HandleSmoothing);
 
                 _progressBar.value += _handleSmoothDirection.x * Time.deltaTime;
             }
@@ -100,23 +100,23 @@ namespace Assets.Scripts.Controllers.UI.Puzzles.Doors
 
         private IEnumerator MoveHandle(Action<bool> onEndHack)
         {
-            while (_progressBar.value < _mechanicalSettings.PuzzleTime && Canvas.enabled)
+            while (_progressBar.value < _settings.PuzzleTime && Canvas.enabled)
             {
                 yield return null;
 
 
                 if (IsPointInsideTheHandle())
                 {
-                    _handleRawDirection += Vector3.right * Time.deltaTime;
+                    _handleRawDirection += Vector3.right * Time.deltaTime * _settings.HandleMovementFunc.Invoke(Time.unscaledTime);
                 }
                 else
                 {
-                    yield return StartCoroutine(ReverseHandle(_mechanicalSettings.HandleReverseTime));
+                    yield return StartCoroutine(ReverseHandle(_settings.HandleReverseTime));
                 }
 
                 _handleRawDirection = Vector3.ClampMagnitude(_handleRawDirection, 1f);
 
-                _handleSmoothDirection = Vector3.Lerp(_handleSmoothDirection, _handleRawDirection, Time.deltaTime * Smoothing);
+                _handleSmoothDirection = Vector3.Lerp(_handleSmoothDirection, _handleRawDirection, Time.deltaTime * HandleSmoothing);
 
                 _progressBar.value += _handleSmoothDirection.x * Time.deltaTime;
             }
@@ -124,7 +124,7 @@ namespace Assets.Scripts.Controllers.UI.Puzzles.Doors
             if (Canvas.enabled) Toggle();
             _gameplayUI.Toggle();
 
-            onEndHack?.Invoke(_progressBar.value >= _mechanicalSettings.PuzzleTime);
+            onEndHack?.Invoke(_progressBar.value >= _settings.PuzzleTime);
 
 
             _input.SwitchCurrentActionMap("Main");
@@ -134,11 +134,11 @@ namespace Assets.Scripts.Controllers.UI.Puzzles.Doors
         {
             var handleAreaLength = _handle.parent.GetComponent<RectTransform>().rect.width / 2;
 
-            while (_progressBar.value < _mechanicalSettings.PuzzleTime && Canvas.enabled)
+            while (_progressBar.value < _settings.PuzzleTime && Canvas.enabled)
             {
                 yield return null;
 
-                _pointSmoothDirection = Vector3.Lerp(_pointSmoothDirection, _pointRawDirection * _movementDirection, Time.deltaTime * Smoothing);
+                _pointSmoothDirection = Vector3.Lerp(_pointSmoothDirection, _pointRawDirection * _movementDirection, Time.deltaTime * _settings.PointSmoothness);
 
 
                 _point.Translate(_pointSmoothDirection * Time.deltaTime);
@@ -149,7 +149,7 @@ namespace Assets.Scripts.Controllers.UI.Puzzles.Doors
 
 
         private bool IsPointInsideTheHandle() =>
-            Mathf.Abs(_point.localPosition.x - _handle.localPosition.x) <= _mechanicalSettings.HandleWidth / 2;
+            Mathf.Abs(_point.localPosition.x - _handle.localPosition.x) <= _settings.HandleWidth / 2;
 
 
         private void SetupPuzzle(DoorBaseSettings settings)
@@ -162,6 +162,8 @@ namespace Assets.Scripts.Controllers.UI.Puzzles.Doors
             _pointSmoothDirection = Vector3.zero;
             _handleSmoothDirection = Vector3.zero;
 
+            _handleRawDirection = Vector3.zero;
+
             _progressBar.value = 0f;
 
             _movementDirection = 0;
@@ -169,18 +171,16 @@ namespace Assets.Scripts.Controllers.UI.Puzzles.Doors
             _hasAnyDirection = false;
 
 
-            _mechanicalSettings = (DoorMechanicalSettings)settings;
+            _settings = (DoorMechanicalSettings)settings;
 
-            _progressBar.maxValue = _mechanicalSettings.PuzzleTime;
+            _progressBar.maxValue = _settings.PuzzleTime;
 
-            _handle.sizeDelta = new Vector2(_mechanicalSettings.HandleWidth, 0);
+            _handle.sizeDelta = new Vector2(_settings.HandleWidth, 0);
 
 
             var resilutionKoef = 1f / Utilities.ResolutionScaler.GetResolutionKoefficient(2160);
 
-            _pointRawDirection = _mechanicalSettings.PointSpeed * Vector3.right * resilutionKoef;
-
-            _handleRawDirection = Vector3.right * resilutionKoef;
+            _pointRawDirection = _settings.PointSpeed * Vector3.right * resilutionKoef;
         }
     }
 }

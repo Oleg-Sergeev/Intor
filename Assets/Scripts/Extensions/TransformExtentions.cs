@@ -19,7 +19,7 @@ namespace Assets.Scripts.Extensions
             {
                 await Task.Yield();
 
-                token.ThrowIfCancellationRequested();
+                if (token.IsCancellationRequested) return;
 
                 var pos = new Vector3(Mathf.SmoothStep(x1, x2, t), Mathf.SmoothStep(y1, y2, t), Mathf.SmoothStep(z1, z2, t));
 
@@ -42,7 +42,7 @@ namespace Assets.Scripts.Extensions
             {
                 await Task.Yield();
 
-                token.ThrowIfCancellationRequested();
+                if (token.IsCancellationRequested) return;
 
                 var rot = new Quaternion(Mathf.SmoothStep(x0, x, t), Mathf.SmoothStep(y0, y, t), Mathf.SmoothStep(z0, z, t), Mathf.SmoothStep(w0, w, t));
 

@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Components;
+using Assets.Scripts.Components.Triggers;
 using Assets.Scripts.Data.Items;
 using Assets.Scripts.Data.UI;
 using Assets.Scripts.Interfaces;
@@ -19,6 +20,8 @@ namespace Assets.Scripts.Controllers
         [SerializeField]
         private GameObject _canvasItemUI;
 
+        private Trigger _trigger;
+
 
         private void Start()
         {
@@ -27,6 +30,8 @@ namespace Assets.Scripts.Controllers
             _itemUI.Name.text = _item.Name;
 
             _canvasItemUI.SetActive(false);
+
+            _trigger = GetComponent<Trigger>();
         }
 
 
@@ -41,8 +46,9 @@ namespace Assets.Scripts.Controllers
 
         public void Interact(PlayerComponent player)
         {
-            player.Inventory.Add(_item);
+            _trigger?.Call();
 
+            player.Inventory.Add(_item);
 
             FinishInteraction(player);
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Assets.Scripts.Controllers.UI;
@@ -75,6 +76,8 @@ namespace Assets.Scripts.Utilities
             _currentExtraInfoIndex = -1;
 
             _isAutodelete = true;
+
+            UpdateTexts();
         }
 
 
@@ -86,9 +89,9 @@ namespace Assets.Scripts.Utilities
             for (int i = 0; i < count; i++) DeleteMessage(0);
         }
 
-        public void OnToggleAutodelete(bool enabled)
+        public void OnToggleAutodelete(bool isAutodelete)
         {
-            _isAutodelete = enabled;
+            _isAutodelete = isAutodelete;
 
             if (_isAutodelete)
             {
@@ -122,7 +125,7 @@ namespace Assets.Scripts.Utilities
 
         private void ShowExtraInfo(int index)
         {
-            _extraLogText.text = _texts[index].MessageInfo.Content;
+            _extraLogText.text = $"[{_texts[index].MessageInfo.Time}] {_texts[index].MessageInfo.Content}";
             _extraLogText.color = Colors[_texts[index].MessageInfo.LogType];
 
             if (_currentExtraInfoIndex == index)
@@ -165,6 +168,17 @@ namespace Assets.Scripts.Utilities
 
         private static void UpdateTexts()
         {
+            if (_messages.Count == 0)
+            {
+               var uiText = _texts[0].UiText;
+
+                uiText.raycastTarget = false;
+                uiText.color = new Color(0.6f, 0.6f, 0.6f);
+                uiText.text = "Debug";
+
+                return;
+            }
+
             var messagesArr = _messages.ToArray();
 
             for (int i = 0; i < messagesArr.Length; i++)
@@ -240,8 +254,12 @@ namespace Assets.Scripts.Utilities
         }
 
 
+
+
         private struct MessageInfo
         {
+            public string Time { get; }
+
             public string Content { get; }
 
             public LogType LogType { get; }
@@ -251,6 +269,7 @@ namespace Assets.Scripts.Utilities
             {
                 Content = content;
                 LogType = logType;
+                Time = DateTime.Now.ToLongTimeString();
             }
         }
 
