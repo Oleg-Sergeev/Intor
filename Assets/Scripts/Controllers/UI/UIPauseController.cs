@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Controllers.UI
 {
@@ -13,9 +14,14 @@ namespace Assets.Scripts.Controllers.UI
         }
 
 
+        public void Continue()
+        {
+            Toggle();
+        }
+
         public void ReturnToLastCheckpoint()
         {
-            Debug.Log("ReturnToLastCheckpoint");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
         public void OpenSettings()

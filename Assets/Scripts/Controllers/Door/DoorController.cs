@@ -59,6 +59,8 @@ namespace Assets.Scripts.Door.Controllers
                     SwitchState<ClosedDoorState>();
             }
 
+
+            _doorUI.ResetButtons();
             _doorUI.Canvas.enabled = false;
         }
 

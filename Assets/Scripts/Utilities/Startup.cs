@@ -14,6 +14,8 @@ namespace Assets.Scripts.Utilities
 
         private void Start()
         {
+            Time.timeScale = 1f;
+
             TogglePanels();
         }
 

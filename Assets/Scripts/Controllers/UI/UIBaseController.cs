@@ -9,7 +9,12 @@ namespace Assets.Scripts.Controllers.UI
         protected Canvas Canvas { get; set; }
 
 
-        protected virtual void Start()
+        protected virtual void Awake()
+        {
+            Init();
+        }
+
+        protected virtual void Init()
         {
             Canvas = GetComponent<Canvas>();
 
@@ -22,6 +27,20 @@ namespace Assets.Scripts.Controllers.UI
             IsCanvasEnabled = !IsCanvasEnabled;
 
             Canvas.enabled = IsCanvasEnabled;
+        }
+
+        public void Enable()
+        {
+            IsCanvasEnabled = true;
+
+            Canvas.enabled = true;
+        }
+
+        public void Disable()
+        {
+            IsCanvasEnabled = false;
+
+            Canvas.enabled = false;
         }
     }
 }

@@ -23,18 +23,13 @@ namespace Assets.Scripts.Controllers.UI
         private IList<SlotComponent> _slots;
 
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             _player.Inventory.SlotAdded += OnSlotAnyChange;
             _player.Inventory.SlotUpdated += OnSlotAnyChange;
             _player.Inventory.SlotRemoved += OnSlotAnyChange;
-        }
-
-        protected override void Start()
-        {
-            base.Start();
-
-            _slots = _slotsParent.GetChilds<SlotComponent>();
         }
 
         private void OnDestroy()
@@ -42,6 +37,14 @@ namespace Assets.Scripts.Controllers.UI
             _player.Inventory.SlotAdded -= OnSlotAnyChange;
             _player.Inventory.SlotUpdated -= OnSlotAnyChange;
             _player.Inventory.SlotRemoved -= OnSlotAnyChange;
+        }
+
+
+        protected override void Init()
+        {
+            base.Init();
+
+            _slots = _slotsParent.GetChilds<SlotComponent>();
         }
 
 

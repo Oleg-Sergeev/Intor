@@ -38,9 +38,9 @@ namespace Assets.Scripts.Controllers.UI.Puzzles.Doors
         private bool _hasAnyDirection;
 
 
-        protected override void Start()
+        protected override void Init()
         {
-            base.Start();
+            base.Init();
 
             _handle = _progressBar.handleRect;
         }
@@ -107,7 +107,7 @@ namespace Assets.Scripts.Controllers.UI.Puzzles.Doors
 
                 if (IsPointInsideTheHandle())
                 {
-                    _handleRawDirection += Vector3.right * Time.deltaTime * _settings.HandleMovementFunc.Invoke(Time.unscaledTime);
+                    _handleRawDirection += Vector3.right * Time.deltaTime * _settings.HandleMovementFunc.Invoke(Time.realtimeSinceStartup);
                 }
                 else
                 {

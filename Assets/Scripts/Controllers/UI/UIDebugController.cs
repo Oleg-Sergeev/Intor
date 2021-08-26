@@ -7,13 +7,28 @@ namespace Assets.Scripts.Controllers.UI
 {
     public class UIDebugController : UIBaseController
     {
+        private const int StartFps = 60;
+        private const int MinFps = 30;
+        private const int MaxFps = 120;
+
         [SerializeField]
         private TextMeshProUGUI _textFps;
+
+        [SerializeField]
+        private TextMeshProUGUI _textFpsLimit;
 
         [SerializeField]
         private FpsCounter _counter;
 
         private Coroutine _coroutineFps;
+
+
+        protected override void Init()
+        {
+            base.Init();
+
+            Application.targetFrameRate = StartFps;
+        }
 
 
         public override void Toggle()
@@ -25,13 +40,16 @@ namespace Assets.Scripts.Controllers.UI
         }
 
 
-        int i = 0;
+        public void ChangeFpsLimit()
+        {
+            Application.targetFrameRate = MinFps + (Application.targetFrameRate % MaxFps);
+
+            _textFpsLimit.text = $"{Application.targetFrameRate} Fps";
+        }
+
+
         public void DebugAction()
         {
-            Debug.Log($"{i++} Very long string {new string('x', Random.Range(1, 150))} {new string('y', Random.Range(1, 150))}");
-
-            int a = 0;
-            int b = 1 / a;
         }
 
 
