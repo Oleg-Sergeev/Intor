@@ -18,12 +18,12 @@ namespace Assets.Scripts.Data
         public int CurrentSize => _slots.Count;
 
 
-        private readonly Dictionary<ulong, Slot> _slots;
+        private readonly Dictionary<string, Slot> _slots;
 
 
         public Inventory()
         {
-            _slots = new Dictionary<ulong, Slot>();
+            _slots = new Dictionary<string, Slot>();
         }
 
 

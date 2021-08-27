@@ -86,6 +86,10 @@ namespace Assets.Scripts.Utilities.Logging
         private void OnDestroy()
         {
             Application.logMessageReceivedThreaded -= OnLogMessageReceived;
+
+            _messages.Clear();
+            _tokens.Clear();
+            _texts.Clear();
         }
 
 

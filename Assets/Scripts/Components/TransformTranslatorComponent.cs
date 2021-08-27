@@ -9,29 +9,35 @@ namespace Assets.Scripts.Components
 {
     public class TransformTranslatorComponent : MonoBehaviour, IMoveable, IRotatable
     {
-        private Vector3 _startPosition;
+        protected Vector3 StartPosition { get; private set; }
 
-        private Quaternion _startRotation;
+        protected Quaternion StartRotation { get; private set; }
 
-        private Action _callback;
+        protected event Action Callback;
 
         private CancellationTokenSource _cts;
 
 
-        [SerializeField]
-        private Vector3 _toPosition;
+        [field: SerializeField]
+        protected Vector3 ToPosition { get; set; }
 
-        [SerializeField]
-        private Vector3 _toRotation;
+        [field: SerializeField]
+        protected Vector3 ToRotation { get; set; }
 
         [SerializeField]
         private SerializableEvent _serializedCallback;
 
-        [SerializeField]
-        private float _speed;
+        [field: SerializeField]
+        protected float Speed { get; set; }
 
-        [SerializeField]
-        private bool _isLocalPosition;
+        [field: SerializeField]
+        protected bool IsLocalPosition { get; private set; }
+
+        [field: SerializeField]
+        protected bool IsRelativePosition { get; private set; }
+
+        [field: SerializeField]
+        protected bool IsRelativeRotation { get; private set; }
 
 
         private void OnEnable()
@@ -46,35 +52,51 @@ namespace Assets.Scripts.Components
 
         private void Start()
         {
-            _startPosition = _isLocalPosition ? transform.localPosition : transform.position;
+            Init();
+        }
 
-            _startRotation = _isLocalPosition ? transform.localRotation : transform.rotation;
+        protected virtual void Init()
+        {
+            StartPosition = IsLocalPosition ? transform.localPosition : transform.position;
+
+            StartRotation = IsLocalPosition ? transform.localRotation : transform.rotation;
+
+            if (IsRelativePosition) ToPosition += StartPosition;
+            if (IsRelativeRotation) ToRotation += StartRotation.eulerAngles;
 
 
             if (!string.IsNullOrEmpty(_serializedCallback.methodName))
             {
-                _callback = (Action)_serializedCallback.target
+                Callback = (Action)_serializedCallback.target
                     .GetType()
                     .GetMethods()
                         .Where(x => x.Name == _serializedCallback.methodName)
                         .First(x => x.GetParameters().Length == 0)
-                    .CreateDelegate(typeof(Action), this);
+                    .CreateDelegate(typeof(Action), _serializedCallback.target);
             }
         }
 
 
-        public void MoveToStart() => Move(_startPosition);
-        public void MoveToDestination() => Move(_toPosition);
-        public void Move(Vector3 direction)
+        public void MoveToStart() => Move(StartPosition);
+        public void MoveToDestination() => Move(ToPosition);
+        public void ResetPosition() => Move(StartPosition, Speed, null, IsLocalPosition);
+        public virtual void Move(Vector3 direction) => Move(direction, Speed, Callback, IsLocalPosition);
+        private void Move(Vector3 direction, float speed, Action callback = default, bool isLocalPosition = true)
         {
-            transform.TranslateTo(direction, _speed, _callback, _isLocalPosition, _cts.Token);
+            _cts.Cancel();
+            _cts = new CancellationTokenSource();
+            transform.TranslateTo(direction, speed, callback, isLocalPosition, _cts.Token);
         }
 
-        public void RotateToStart() => Rotate(_startRotation);
-        public void RotateToDestination() => Rotate(Quaternion.Euler(_toRotation));
-        public void Rotate(Quaternion rotation)
+        public void RotateToStart() => Rotate(StartRotation);
+        public void RotateToDestination() => Rotate(Quaternion.Euler(ToRotation));
+        public void ResetRotation() => Rotate(StartRotation, Speed, null, IsLocalPosition);
+        public virtual void Rotate(Quaternion rotation) => Rotate(rotation, Speed, Callback, IsLocalPosition);
+        private void Rotate(Quaternion rotation, float speed, Action callback = default, bool isLocalPosition = true)
         {
-            transform.TranslateTo(rotation, _speed, _callback, _isLocalPosition, _cts.Token);
+            _cts.Cancel();
+            _cts = new CancellationTokenSource();
+            transform.TranslateTo(rotation, speed, callback, isLocalPosition, _cts.Token);
         }
     }
 }

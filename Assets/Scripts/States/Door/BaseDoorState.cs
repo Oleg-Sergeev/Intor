@@ -26,6 +26,6 @@ namespace Assets.Scripts.States.Door
 
         public abstract void Lock();
 
-        public abstract void HandleUI(DoorUI doorUI, bool hasKey, params UnityAction[] callbacks);
+        public abstract void HandleUI(DoorUI doorUI, bool hasKey, bool hasHackModule, params UnityAction[] callbacks);
     }
 }

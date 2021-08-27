@@ -43,7 +43,7 @@ namespace Assets.Scripts.States.Door
 
         private void Hack(params UnityAction[] callbacks)
         {
-            _doorHacker.Hack(_doorSettings, (success) =>
+            _doorHacker.Hack(_doorSettings, success =>
             {
                 if (success) Close();
 
@@ -52,9 +52,9 @@ namespace Assets.Scripts.States.Door
         }
 
 
-        public override void HandleUI(DoorUI doorUI, bool hasKey, params UnityAction[] callbacks)
+        public override void HandleUI(DoorUI doorUI, bool hasKey, bool hasHackModule, params UnityAction[] callbacks)
         {
-            doorUI.ButtonHack.AddListenersWithEnable(() => Hack(callbacks));
+            if (hasHackModule) doorUI.ButtonHack.AddListenersWithEnable(() => Hack(callbacks));
 
             if (!hasKey) return;
 

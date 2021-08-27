@@ -8,9 +8,14 @@ namespace Assets.Scripts.Extensions
 {
     public static class TransformExtentions
     {
-        public static async void TranslateTo(this Transform transform, Vector3 endPos, float speed = 1.5f, Action callback = default, bool isLocal = false, CancellationToken token = default)
+        public static async void TranslateTo(this Transform transform, Vector3 endPos, float speed = 2f, Action callback = default, bool isLocal = false, CancellationToken token = default)
         {
             var t = 0f;
+
+            var koef = isLocal ?
+                Vector3.Distance(transform.localPosition, endPos) :
+                Vector3.Distance(transform.position, endPos);
+            if (koef == 0f) koef = float.Epsilon;
 
             var (x1, y1, z1) = !isLocal ? transform.position : transform.localPosition;
             var (x2, y2, z2) = endPos;
@@ -26,14 +31,19 @@ namespace Assets.Scripts.Extensions
                 if (!isLocal) transform.position = pos;
                 else transform.localPosition = pos;
 
-                t += speed * Time.deltaTime;
+                t += speed * Time.deltaTime / koef;
             }
 
             callback?.Invoke();
         }
-        public static async void TranslateTo(this Transform transform, Quaternion endRot, float speed = 1.5f, Action callback = default, bool isLocal = false, CancellationToken token = default)
+        public static async void TranslateTo(this Transform transform, Quaternion endRot, float speed = 60f, Action callback = default, bool isLocal = false, CancellationToken token = default)
         {
             var t = 0f;
+
+            var koef = isLocal ?
+                Quaternion.Angle(transform.localRotation, endRot) :
+                Quaternion.Angle(transform.rotation, endRot);
+            if (koef == 0f) koef = float.Epsilon;
 
             var (x0, y0, z0, w0) = transform.rotation;
             var (x, y, z, w) = endRot;
@@ -49,15 +59,15 @@ namespace Assets.Scripts.Extensions
                 if (!isLocal) transform.rotation = rot;
                 else transform.localRotation = rot;
 
-                t += speed * Time.deltaTime;
+                t += speed * Time.deltaTime / koef;
             }
 
             callback?.Invoke();
         }
-        public static void TranslateTo(this Transform transform, Vector3 endPos, Quaternion endRot, float speed = 1.5f, Action callback = default, bool isLocal = false, CancellationToken token = default)
+        public static void TranslateTo(this Transform transform, Vector3 endPos, Quaternion endRot, float movementSpeed = 3f, float rotationSpeed = 60f, Action callback = default, bool isLocal = false, CancellationToken token = default)
         {
-            transform.TranslateTo(endPos, speed, default, isLocal, token);
-            transform.TranslateTo(endRot, speed, callback, isLocal, token);
+            transform.TranslateTo(endPos, movementSpeed, default, isLocal, token);
+            transform.TranslateTo(endRot, rotationSpeed, callback, isLocal, token);
         }
 
 
@@ -78,10 +88,13 @@ namespace Assets.Scripts.Extensions
 
         public static async void ScaleTo(this Transform transform, Vector3 endScale, float speed = 1.5f, Action callback = default)
         {
+            var t = 0f;
+
+            var koef = Vector3.Distance(transform.localScale, endScale);
+            if (koef == 0f) koef = float.Epsilon;
+
             var (x1, y1, z1) = transform.localScale;
             var (x2, y2, z2) = endScale;
-
-            var t = 0f;
 
             while (t <= 1)
             {
@@ -89,7 +102,7 @@ namespace Assets.Scripts.Extensions
 
                 transform.localScale = new Vector3(Mathf.SmoothStep(x1, x2, t), Mathf.SmoothStep(y1, y2, t), Mathf.SmoothStep(z1, z2, t));
 
-                t += speed * Time.deltaTime;
+                t += speed * Time.deltaTime / koef;
             }
 
             callback?.Invoke();

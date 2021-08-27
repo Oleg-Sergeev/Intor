@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.PropertyAttributes;
+using UnityEngine;
+
 
 namespace Assets.Scripts.Data.Items
 {
@@ -6,7 +8,8 @@ namespace Assets.Scripts.Data.Items
     public class Item : ScriptableObject
     {
         [field: SerializeField]
-        public ulong Id { get; private set; }
+        [field: BeginReadOnlyGroup, AutoGenerateId, EndReadOnlyGroup]
+        public string Id { get; private set; }
 
         [field: SerializeField]
         public string Name { get; set; }

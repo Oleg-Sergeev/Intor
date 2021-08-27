@@ -32,7 +32,7 @@ namespace Assets.Scripts.States.Door
             StateSwitcher.SwitchState<LockedDoorState>();
         }
 
-        public override void HandleUI(DoorUI doorUI, bool hasKey, params UnityAction[] callbacks)
+        public override void HandleUI(DoorUI doorUI, bool hasKey, bool hasHackModule, params UnityAction[] callbacks)
         {
             doorUI.ButtonClose.AddListenersWithEnable(Close);
             doorUI.ButtonClose.AddListeners(callbacks);

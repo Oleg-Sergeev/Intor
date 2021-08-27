@@ -22,6 +22,9 @@ namespace Assets.Scripts.Door.Controllers
         private Key _requiredKey;
 
         [SerializeField]
+        private Module _requiredHackModule;
+
+        [SerializeField]
         private DoorMechanicalSettings _settings;
 
         [SerializeField]
@@ -77,8 +80,8 @@ namespace Assets.Scripts.Door.Controllers
 
 
             //???
-            if (_currentState is OpenedDoorState) transform.parent.TranslateTo(Quaternion.Euler(0, -90, 0));
-            else transform.parent.TranslateTo(Quaternion.Euler(0, 0, 0));
+            if (_currentState is OpenedDoorState) transform.parent.TranslateTo(Quaternion.Euler(0, -90, 0), 110);
+            else transform.parent.TranslateTo(Quaternion.Euler(0, 0, 0), 110);
         }
 
 
@@ -90,8 +93,9 @@ namespace Assets.Scripts.Door.Controllers
 
 
             var hasKey = player.Inventory.HasItem(_requiredKey);
+            var hasHackModule = _requiredKey != null && player.Inventory.HasItem(_requiredHackModule);
 
-            _currentState.HandleUI(_doorUI, hasKey, () => Interact(player));
+            _currentState.HandleUI(_doorUI, hasKey, hasHackModule, () => Interact(player));
         }
 
         public void Interact(PlayerComponent player)
