@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.Components;
+using Assets.Scripts.Controllers.Player;
 using Assets.Scripts.Data;
 using Assets.Scripts.Data.Items;
 using Assets.Scripts.Extensions;
@@ -10,7 +11,7 @@ namespace Assets.Scripts.Controllers.UI
     public class UIInventoryController : UIBaseController
     {
         [SerializeField]
-        private PlayerComponent _player;
+        private PlayerController _player;
 
         [SerializeField]
         private ItemInfoComponent _itemInfo;

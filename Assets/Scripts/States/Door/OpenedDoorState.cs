@@ -9,7 +9,7 @@ namespace Assets.Scripts.States.Door
 {
     public class OpenedDoorState : BaseDoorState
     {
-        public OpenedDoorState(Key requiredKey, IDoorStateSwitcher stateSwitcher) : base(requiredKey, stateSwitcher)
+        public OpenedDoorState(int id, Key requiredKey, IDoorStateSwitcher stateSwitcher) : base(id, requiredKey, stateSwitcher)
         {
         }
 

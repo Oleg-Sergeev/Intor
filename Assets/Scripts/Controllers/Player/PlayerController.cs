@@ -1,16 +1,43 @@
-﻿using Assets.Scripts.Components;
+﻿using Assets.Scripts.Data;
+using Assets.Scripts.Data.SaveData;
+using Assets.Scripts.Utilities.Saving;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Player
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, ISaveable
     {
-        private PlayerComponent _player;
+        public int Id => gameObject.GetInstanceID();
 
 
-        private void Start()
+        [field: SerializeField]
+        public string Name { get; private set; }
+
+        public Inventory Inventory { get; private set; }
+
+
+        private void Awake()
         {
-            _player = GetComponent<PlayerComponent>();
+            Inventory = new Inventory();
         }
+
+
+        public void SetItemData(ItemData itemData)
+        {
+            var playerData = (PlayerData)itemData;
+
+            Inventory = playerData.Inventory;
+
+            transform.position = playerData.Position;
+
+            transform.rotation = Quaternion.Euler(playerData.Rotation);
+        }
+
+        public ItemData GetItemData() => new PlayerData(Id)
+        {
+            Inventory = Inventory,
+            Position = transform.position,
+            Rotation = transform.rotation.eulerAngles
+        };
     }
 }

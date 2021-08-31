@@ -1,3 +1,4 @@
+using System;
 using Assets.Scripts.Data;
 using Assets.Scripts.Interfaces;
 using UnityEngine;
@@ -40,12 +41,12 @@ namespace Assets.Scripts.Controllers.Player
         }
 
 
-        public void Move(Vector3 direction)
+        public void Move(Vector3 direction, Action callback = default)
         {
             _rigidbody.MovePosition(transform.position + direction);
         }
 
-        public void Rotate(Quaternion rotation)
+        public void Rotate(Quaternion rotation, Action callback = default)
         {
             _rigidbody.MoveRotation(rotation);
         }

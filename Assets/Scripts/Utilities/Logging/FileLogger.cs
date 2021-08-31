@@ -26,6 +26,7 @@ namespace Assets.Scripts.Utilities.Logging
             {
                 Debug.LogWarning($"Removed duplicate {nameof(FileLogger)} ({name})");
                 Destroy(gameObject);
+                return;
             }
 
             RootFolderPath = $"{Application.persistentDataPath}/Logs";
@@ -86,7 +87,7 @@ namespace Assets.Scripts.Utilities.Logging
 
         public void Open()
         {
-            Application.OpenURL($"file:///{WorkFolderPath}");
+            Application.OpenURL($"jar:file:///{WorkFolderPath}");
         }
     }
 }

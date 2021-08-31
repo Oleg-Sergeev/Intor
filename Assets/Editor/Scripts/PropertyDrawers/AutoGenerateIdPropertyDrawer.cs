@@ -13,16 +13,17 @@ namespace Assets.Editor.Scripts.PropertyDrawers
             if (string.IsNullOrEmpty(property.stringValue))
                 GenerateId(property);
 
-            var textureGUIStyle = new GUIStyle(GUI.skin.button) { padding = new RectOffset(4, 4, 4, 4) };
-            var buttonRect = new Rect(position.width, position.y, position.height, position.height);
-            var guiContent = new GUIContent(Resources.Load<Texture2D>("reset-icon"), "Refresh ID");
+            const int ExtraWidth = 3;
+
+            var buttonRect = new Rect(position.width - ExtraWidth, position.y, position.height + ExtraWidth, position.height);
+            var guiContent = new GUIContent("\u21A9", "Refresh ID");
 
             var enabled = GUI.enabled;
             GUI.enabled = true;
-            if (GUI.Button(buttonRect, guiContent, textureGUIStyle)) GenerateId(property);
+            if (GUI.Button(buttonRect, guiContent, "toolbarbutton")) GenerateId(property);
             GUI.enabled = enabled;
 
-            var propertyRect = new Rect(position.position, new Vector2(position.width - position.height, position.height));
+            var propertyRect = new Rect(position.position, new Vector2(position.width - position.height - ExtraWidth, position.height));
             EditorGUI.PropertyField(propertyRect, property, label, true);
         }
 

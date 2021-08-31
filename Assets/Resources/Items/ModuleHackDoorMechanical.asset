@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65f78131fcfac9469a14aeb71090876, type: 3}
   m_Name: ModuleHackDoorMechanical
   m_EditorClassIdentifier: 
+  <Key>k__BackingField: PUNCTURED_PNEUMATIC_CYLINDER
   <Id>k__BackingField: b5bf2361-5a71-4df7-ab74-bbf4e5384ab3
-  <Name>k__BackingField: Punctured pneumatic cylinder
+  <Name>k__BackingField: '"Punctured pneumatic cylinder'
   <Description>k__BackingField: It will no longer be able to withstand the initial
-    load, but it is suitable for picking locks.
+    load, but it is suitable for picking locks."
   <Icon>k__BackingField: {fileID: 0}

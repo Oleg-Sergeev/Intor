@@ -7,13 +7,17 @@ namespace Assets.Scripts.States.Door
 {
     public abstract class BaseDoorState
     {
+        public int Id { get; }
+
         protected Key RequiredKey { get; }
 
         protected IDoorStateSwitcher StateSwitcher { get; }
 
 
-        protected BaseDoorState(Key requiredKey, IDoorStateSwitcher stateSwitcher)
+        protected BaseDoorState(int id, Key requiredKey, IDoorStateSwitcher stateSwitcher)
         {
+            Id = id;
+
             RequiredKey = requiredKey;
 
             StateSwitcher = stateSwitcher;

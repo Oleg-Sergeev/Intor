@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Utilities.Localization;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Controllers.UI
@@ -27,11 +28,13 @@ namespace Assets.Scripts.Controllers.UI
         public void OpenSettings()
         {
             Debug.Log("OpenSettings");
+            LocalizationController.ChangeLanguage("Ru");
         }
 
         public void ExitToMainMenu()
         {
             Debug.Log("ExitToMainMenu");
+            LocalizationController.ChangeLanguage("en");
         }
     }
 }

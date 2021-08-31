@@ -15,7 +15,7 @@ namespace Assets.Scripts.States.Door
         private DoorBaseSettings _doorSettings;
 
 
-        public LockedDoorState(Key requiredKey, IDoorStateSwitcher stateSwitcher, DoorBaseSettings doorSettings, IDoorHackable doorHacker) : base(requiredKey, stateSwitcher)
+        public LockedDoorState(int id, Key requiredKey, IDoorStateSwitcher stateSwitcher, DoorBaseSettings doorSettings, IDoorHackable doorHacker) : base(id, requiredKey, stateSwitcher)
         {
             _doorSettings = doorSettings;
             _doorHacker = doorHacker;

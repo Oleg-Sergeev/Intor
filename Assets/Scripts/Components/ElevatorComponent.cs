@@ -1,11 +1,17 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Assets.Scripts.Controllers.UI;
+using Assets.Scripts.Data.SaveData;
+using Assets.Scripts.Utilities.Saving;
 using UnityEngine;
 
 namespace Assets.Scripts.Components
 {
-    public class ElevatorComponent : TransformTranslatorComponent
+    public class ElevatorComponent : TransformTranslatorComponent, ISaveable
     {
+        public int Id => gameObject.GetInstanceID();
+
+
         private const float Epsilon = 0.01f;
 
         private Vector3 _positionDown;
@@ -27,6 +33,12 @@ namespace Assets.Scripts.Components
         [SerializeField]
         private bool _isWorking = true;
 
+
+
+        private void OnDestroy()
+        {
+            Callback -= OnEndMove;
+        }
 
 
         protected override void Init()
@@ -56,28 +68,22 @@ namespace Assets.Scripts.Components
             Callback += OnEndMove;
         }
 
-        private void OnDestroy()
-        {
-            Callback -= OnEndMove;
-        }
-
-
-        public override async void Move(Vector3 direction)
+        public override async void Move(Vector3 direction, Action callback = default)
         {
             if (!_isWorking) return;
 
-            var isAtTheUp = IsAtTheTop(direction);
-            var isAtTheDown = IsAtTheDown(direction);
-            if ((IsAtTheDown() && isAtTheDown) || (IsAtTheTop() && isAtTheUp)) return;
+            var isToTheUp = IsAtTheTop(direction);
+            var isToTheDown = IsAtTheDown(direction);
+            if ((IsAtTheDown() && isToTheDown) || (IsAtTheTop() && isToTheUp)) return;
 
-            if (isAtTheDown) _elevatorButton.RotateToStart();
+            if (isToTheDown) _elevatorButton.RotateToStart();
             else _elevatorButton.RotateToDestination();
 
             _elevatorUi.DisableButtons();
 
             await Task.Delay((int)(_moveDelay * 1000));
 
-            base.Move(direction);
+            base.Move(direction, callback);
         }
 
 
@@ -103,10 +109,27 @@ namespace Assets.Scripts.Components
         }
 
 
-        private bool IsAtTheDown() => IsAtTheDown(IsLocalPosition ? transform.localPosition : transform.position);
+        private bool IsAtTheDown() => IsAtTheDown(CurrentPosition);
         private bool IsAtTheDown(Vector3 position) => Vector3.Distance(_positionDown, position) <= Epsilon;
 
-        private bool IsAtTheTop() => IsAtTheTop(IsLocalPosition ? transform.localPosition : transform.position);
+        private bool IsAtTheTop() => IsAtTheTop(CurrentPosition);
         private bool IsAtTheTop(Vector3 position) => Vector3.Distance(_positionUp, position) <= Epsilon;
+
+
+        public void SetItemData(ItemData itemData)
+        {
+            var elevatorData = (ElevatorData)itemData;
+
+            if (IsLocalPosition) transform.localPosition = elevatorData.Position;
+            else transform.position = elevatorData.Position;
+
+            SetWorking(elevatorData.IsWorking);
+        }
+
+        public ItemData GetItemData() => new ElevatorData(Id)
+        {
+            IsWorking = _isWorking,
+            Position = CurrentPosition
+        };
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Assets.Scripts.Components;
 using Assets.Scripts.Data;
 using Assets.Scripts.Interfaces;
 using UnityEngine;
@@ -8,14 +7,14 @@ namespace Assets.Scripts.Controllers.Player
 {
     public class PlayerInteractionController : MonoBehaviour
     {
-        private PlayerComponent _player;
+        private PlayerController _player;
 
         private HashSet<Collider> _overlaps;
 
 
         private void Awake()
         {
-            _player = transform.parent.GetComponent<PlayerComponent>();
+            _player = transform.parent.GetComponent<PlayerController>();
 
             _player.Inventory.SlotAdded += OnSlotAddedOrRemoved;
             _player.Inventory.SlotRemoved += OnSlotAddedOrRemoved;

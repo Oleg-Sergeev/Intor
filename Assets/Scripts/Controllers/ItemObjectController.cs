@@ -1,14 +1,20 @@
-﻿using Assets.Scripts.Components;
-using Assets.Scripts.Components.Triggers;
+﻿using Assets.Scripts.Components.Triggers;
+using Assets.Scripts.Controllers.Player;
 using Assets.Scripts.Data.Items;
+using Assets.Scripts.Data.SaveData;
 using Assets.Scripts.Data.UI;
 using Assets.Scripts.Interfaces;
+using Assets.Scripts.Utilities.Localization;
+using Assets.Scripts.Utilities.Saving;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers
 {
-    public class ItemObjectController : MonoBehaviour, IInteractional
+    public class ItemObjectController : MonoBehaviour, IInteractional, ISaveable
     {
+        public int Id => gameObject.GetInstanceID();
+
+
         private bool _isDeleted;
 
         [SerializeField]
@@ -23,6 +29,11 @@ namespace Assets.Scripts.Controllers
         private Trigger _trigger;
 
 
+        private void Awake()
+        {
+            LocalizationController.LanguageChanged += OnLanguageChanged;
+        }
+
         private void Start()
         {
             _isDeleted = false;
@@ -34,8 +45,13 @@ namespace Assets.Scripts.Controllers
             _trigger = GetComponent<Trigger>();
         }
 
+        private void OnDestroy()
+        {
+            LocalizationController.LanguageChanged -= OnLanguageChanged;
+        }
 
-        public void StartInteraction(PlayerComponent player)
+
+        public void StartInteraction(PlayerController player)
         {
             _itemUI.PickUp.onClick.RemoveAllListeners();
             _itemUI.PickUp.interactable = player.Inventory.HasEmptySpace(_item);
@@ -44,7 +60,7 @@ namespace Assets.Scripts.Controllers
             _canvasItemUI.SetActive(true);
         }
 
-        public void Interact(PlayerComponent player)
+        public void Interact(PlayerController player)
         {
             _trigger?.Call();
 
@@ -57,7 +73,7 @@ namespace Assets.Scripts.Controllers
             _isDeleted = true;
         }
 
-        public void FinishInteraction(PlayerComponent player)
+        public void FinishInteraction(PlayerController player)
         {
             _itemUI.PickUp.onClick.RemoveAllListeners();
 
@@ -65,6 +81,27 @@ namespace Assets.Scripts.Controllers
             _canvasItemUI.SetActive(false);
 
             if (_isDeleted) gameObject.SetActive(false);
+        }
+
+
+        public void SetItemData(ItemData itemData)
+        {
+            var data = (ItemObjectData)itemData;
+
+            _isDeleted = data.IsDeleted;
+
+            if (_isDeleted) FinishInteraction(null);
+        }
+
+        public ItemData GetItemData() => new ItemObjectData(Id)
+        {
+            IsDeleted = _isDeleted
+        };
+
+
+        private void OnLanguageChanged()
+        {
+            _itemUI.Name.text = _item.Name;
         }
     }
 }

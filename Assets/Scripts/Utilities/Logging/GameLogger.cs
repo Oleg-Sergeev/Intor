@@ -62,6 +62,7 @@ namespace Assets.Scripts.Utilities.Logging
             {
                 Debug.LogWarning($"Removed duplicate {nameof(GameLogger)} ({name})");
                 Destroy(gameObject);
+                return;
             }
 
             Application.logMessageReceivedThreaded += OnLogMessageReceived;
