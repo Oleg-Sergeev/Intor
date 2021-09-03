@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Data.Items;
+using Newtonsoft.Json;
 
 namespace Assets.Scripts.Data
 {
+    [Serializable]
     public class Inventory
     {
         public event Action<Slot> SlotAdded;
@@ -14,9 +16,13 @@ namespace Assets.Scripts.Data
 
         public const int TotalSize = 15;
 
-
+        [JsonIgnore]
         public int CurrentSize => _slots.Count;
 
+        public IReadOnlyList<Slot> Slots => _slots.Values.ToList();
+
+        [JsonIgnore]
+        public IReadOnlyList<Item> Items => _slots.Values.Select(s => s.Item)?.ToList();
 
         private readonly Dictionary<string, Slot> _slots;
 
@@ -26,10 +32,11 @@ namespace Assets.Scripts.Data
             _slots = new Dictionary<string, Slot>();
         }
 
-
-        public IList<Slot> GetSlots() => _slots.Values.ToList();
-
-        public IList<Item> GetItems() => _slots.Values.Select(s => s.Item)?.ToList();
+        [JsonConstructor]
+        private Inventory(IReadOnlyList<Slot> slots)
+        {
+            _slots = slots.ToDictionary(s => s.Item.Id, s => s);
+        }
 
 
         public bool HasEmptySpace(Item sameItem = null) => CurrentSize < TotalSize || (sameItem != null && _slots.ContainsKey(sameItem.Id));
@@ -39,7 +46,7 @@ namespace Assets.Scripts.Data
 
 
 
-        public void Add(Item item)
+        public void Add(Item item, int amount = 1)
         {
             if (item == null || !HasEmptySpace(item)) return;
 
@@ -52,7 +59,7 @@ namespace Assets.Scripts.Data
             }
             else
             {
-                _slots.Add(item.Id, new Slot(item));
+                _slots.Add(item.Id, new Slot(item, amount));
 
                 SlotAdded?.Invoke(slot);
             }

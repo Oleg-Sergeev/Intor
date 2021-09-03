@@ -8,6 +8,7 @@ using Assets.Scripts.Data.SaveData;
 using Assets.Scripts.Data.UI;
 using Assets.Scripts.Extensions;
 using Assets.Scripts.Interfaces;
+using Assets.Scripts.PropertyAttributes;
 using Assets.Scripts.States.Door;
 using Assets.Scripts.Utilities.Saving;
 using UnityEngine;
@@ -16,7 +17,9 @@ namespace Assets.Scripts.Door.Controllers
 {
     public class DoorController : MonoBehaviour, IDoorStateSwitcher, IInteractional, ISaveable
     {
-        public int Id => gameObject.GetInstanceID();
+        [field: SerializeField]
+        [field: BeginReadOnlyGroup, AutoGenerateId, EndReadOnlyGroup]
+        public string Id { get; private set; }
 
 
         private BaseDoorState _currentState;

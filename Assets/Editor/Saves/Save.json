@@ -1,0 +1,98 @@
+{
+  "ItemDatas": [
+    {
+      "$type": "Assets.Scripts.Data.SaveData.DoorData, Assembly-CSharp",
+      "State": 0,
+      "Id": "afc399f8-010f-4b81-8f19-3ca370d9dc4a"
+    },
+    {
+      "$type": "Assets.Scripts.Data.SaveData.DoorData, Assembly-CSharp",
+      "State": 2,
+      "Id": "0e0033ac-5dfc-4335-adff-4adaf4496110"
+    },
+    {
+      "$type": "Assets.Scripts.Data.SaveData.ItemObjectData, Assembly-CSharp",
+      "IsDeleted": false,
+      "Id": "1b5357f9-d7de-49da-acf3-2014c7ea8870"
+    },
+    {
+      "$type": "Assets.Scripts.Data.SaveData.ItemObjectData, Assembly-CSharp",
+      "IsDeleted": true,
+      "Id": "94384e5a-eb78-42cc-aa1d-d777fb5d698f"
+    },
+    {
+      "$type": "Assets.Scripts.Data.SaveData.ElevatorData, Assembly-CSharp",
+      "IsWorking": false,
+      "Position": "6,5 2,999602 1,25",
+      "Rotation": "16,70024 357,014 14,73826",
+      "Id": "636a4b56-1672-4c91-b67f-2bbfbe6d3754"
+    },
+    {
+      "$type": "Assets.Scripts.Data.SaveData.LeverData, Assembly-CSharp",
+      "Position": "0 0 0",
+      "Rotation": "0 0 29,96003",
+      "Id": "238a4493-4b8a-4826-83c9-1091624760d5"
+    },
+    {
+      "$type": "Assets.Scripts.Data.SaveData.ComponentsData, Assembly-CSharp",
+      "ComponentsToAdd": [
+        "UnityEngine.Rigidbody, UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+      ],
+      "ComponentsToRemove": [],
+      "Position": "3,235339 0,7060258 0,7650063",
+      "Rotation": "-0,003213391 349,9859 221,674",
+      "Id": "f7d7883c-5d97-48e1-8f18-ffe3b4a1e458"
+    },
+    {
+      "$type": "Assets.Scripts.Data.SaveData.ComponentsData, Assembly-CSharp",
+      "ComponentsToAdd": [],
+      "ComponentsToRemove": [
+        "Assets.Scripts.Components.Triggers.TriggerComponent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+      ],
+      "Position": "1,5 0,04 1,75",
+      "Rotation": "0 0 29,96003",
+      "Id": "9a7ba64c-1361-4e61-9707-0da7335708fc"
+    },
+    {
+      "$type": "Assets.Scripts.Data.SaveData.ComponentsData, Assembly-CSharp",
+      "ComponentsToAdd": [
+        "UnityEngine.BoxCollider, UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "UnityEngine.Rigidbody, UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+      ],
+      "ComponentsToRemove": [],
+      "Position": "2,942177 2,211268 1,760371",
+      "Rotation": "353,0191 350,7278 41,57682",
+      "Id": "93175aaf-44dd-4bc0-8517-d35d46c00b66"
+    },
+    {
+      "$type": "Assets.Scripts.Data.SaveData.CameraData, Assembly-CSharp",
+      "Position": "12,30439 13,0101 1,523744",
+      "Rotation": "40 315 0",
+      "Id": "MainCamera"
+    },
+    {
+      "$type": "Assets.Scripts.Data.SaveData.ComponentsData, Assembly-CSharp",
+      "ComponentsToAdd": [],
+      "ComponentsToRemove": [
+        "Assets.Scripts.Components.Triggers.TriggerComponent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+      ],
+      "Position": "1,5 0,04 1,75",
+      "Rotation": "0 0 29,96003",
+      "Id": "3f2ad329-9680-48bf-b104-9f11c4d55f5a"
+    },
+    {
+      "$type": "Assets.Scripts.Data.SaveData.PlayerData, Assembly-CSharp",
+      "Slots": {
+        "b5bf2361-5a71-4df7-ab74-bbf4e5384ab3": 1
+      },
+      "Position": "6,576074 3,51 7,380248",
+      "Rotation": "2,869724E-05 327,5383 2,629131E-05",
+      "Id": "fb7e1842-be8d-4b89-9351-2b50572801e1"
+    },
+    {
+      "$type": "Assets.Scripts.Data.SaveData.DoorData, Assembly-CSharp",
+      "State": 2,
+      "Id": "2017c235-a8a5-4d25-9d22-ddf8821d64cc"
+    }
+  ]
+}

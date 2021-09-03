@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Assets.Scripts.Controllers.UI;
 using Assets.Scripts.Data.SaveData;
+using Assets.Scripts.PropertyAttributes;
 using Assets.Scripts.Utilities.Saving;
 using UnityEngine;
 
@@ -9,10 +10,12 @@ namespace Assets.Scripts.Components
 {
     public class ElevatorComponent : TransformTranslatorComponent, ISaveable
     {
-        public int Id => gameObject.GetInstanceID();
+        [field: SerializeField]
+        [field: BeginReadOnlyGroup, AutoGenerateId, EndReadOnlyGroup]
+        public string Id { get; private set; }
 
 
-        private const float Epsilon = 0.01f;
+        private const float Epsilon = 0.1f;
 
         private Vector3 _positionDown;
         private Vector3 _positionUp;
@@ -20,6 +23,9 @@ namespace Assets.Scripts.Components
 
         [SerializeField]
         private TransformTranslatorComponent _elevatorButton;
+
+        [SerializeField]
+        private TransformTranslatorComponent[] _elevatorGates;
 
         [SerializeField]
         private UIElevatorController _elevatorUi;
@@ -52,23 +58,37 @@ namespace Assets.Scripts.Components
             }
             else _elevatorUi.SetWorking(false);
 
-
             if (_isStartAtTheDown)
             {
                 _positionDown = StartPosition;
                 _positionUp = ToPosition;
+
+                _elevatorGates[0].RotateToDestination();
             }
             else
             {
                 _positionDown = ToPosition;
                 _positionUp = StartPosition;
+
+                _elevatorGates[1].RotateToDestination();
             }
 
 
             Callback += OnEndMove;
         }
 
-        public override async void Move(Vector3 direction, Action callback = default)
+
+        public void MoveImmediately(Vector3 direction, Action callback = default, float? speed = null)
+        {
+            var tmp = _moveDelay;
+
+            _moveDelay = 0;
+            Move(direction, callback, speed);
+            _moveDelay = tmp;
+        }
+
+
+        public override async void Move(Vector3 direction, Action callback = default, float? speed = null)
         {
             if (!_isWorking) return;
 
@@ -76,14 +96,24 @@ namespace Assets.Scripts.Components
             var isToTheDown = IsAtTheDown(direction);
             if ((IsAtTheDown() && isToTheDown) || (IsAtTheTop() && isToTheUp)) return;
 
-            if (isToTheDown) _elevatorButton.RotateToStart();
-            else _elevatorButton.RotateToDestination();
+            if (isToTheDown)
+            {
+                _elevatorButton.RotateToStart();
+
+                _elevatorGates[1].RotateToStart();
+            }
+            else
+            {
+                _elevatorButton.RotateToDestination();
+
+                _elevatorGates[0].RotateToStart();
+            }
 
             _elevatorUi.DisableButtons();
 
             await Task.Delay((int)(_moveDelay * 1000));
 
-            base.Move(direction, callback);
+            base.Move(direction, callback, speed);
         }
 
 
@@ -94,17 +124,31 @@ namespace Assets.Scripts.Components
         {
             _isWorking = isWorking;
 
-            _elevatorUi.SetWorking(isWorking);
-
+            _elevatorUi.SetWorking(_isWorking);
 
             if (_isWorking) OnEndMove();
+            else
+            {
+                _elevatorGates[0].ResetRotation();
+                _elevatorGates[1].RotateToDestination();
+            }
         }
 
 
         public void OnEndMove()
         {
-            if (IsAtTheDown()) _elevatorUi.ToggleUp();
-            else if (IsAtTheTop()) _elevatorUi.ToggleDown();
+            if (IsAtTheDown())
+            {
+                _elevatorUi.ToggleUp();
+
+                _elevatorGates[0].RotateToDestination();
+            }
+            else if (IsAtTheTop())
+            {
+                _elevatorUi.ToggleDown();
+
+                _elevatorGates[1].RotateToDestination();
+            }
             else _elevatorUi.EnableButtons();
         }
 
@@ -116,6 +160,7 @@ namespace Assets.Scripts.Components
         private bool IsAtTheTop(Vector3 position) => Vector3.Distance(_positionUp, position) <= Epsilon;
 
 
+
         public void SetItemData(ItemData itemData)
         {
             var elevatorData = (ElevatorData)itemData;
@@ -123,13 +168,17 @@ namespace Assets.Scripts.Components
             if (IsLocalPosition) transform.localPosition = elevatorData.Position;
             else transform.position = elevatorData.Position;
 
+            if (IsLocalRotation) transform.localRotation = Quaternion.Euler(elevatorData.Rotation);
+            else transform.rotation = Quaternion.Euler(elevatorData.Rotation);
+
             SetWorking(elevatorData.IsWorking);
         }
 
         public ItemData GetItemData() => new ElevatorData(Id)
         {
             IsWorking = _isWorking,
-            Position = CurrentPosition
+            Position = CurrentPosition,
+            Rotation = CurrentRotation.eulerAngles
         };
     }
 }

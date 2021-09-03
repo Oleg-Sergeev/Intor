@@ -61,7 +61,7 @@ namespace Assets.Scripts.Utilities.Logging
             else
             {
                 Debug.LogWarning($"Removed duplicate {nameof(GameLogger)} ({name})");
-                Destroy(gameObject);
+                DestroyImmediate(gameObject);
                 return;
             }
 
@@ -89,6 +89,7 @@ namespace Assets.Scripts.Utilities.Logging
             Application.logMessageReceivedThreaded -= OnLogMessageReceived;
 
             _messages.Clear();
+            foreach (var tokenSrc in _tokens) tokenSrc.Cancel();
             _tokens.Clear();
             _texts.Clear();
         }

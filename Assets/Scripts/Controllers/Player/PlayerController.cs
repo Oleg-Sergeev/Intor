@@ -1,5 +1,8 @@
-﻿using Assets.Scripts.Data;
+﻿using System.Linq;
+using Assets.Scripts.Data;
+using Assets.Scripts.Data.Items;
 using Assets.Scripts.Data.SaveData;
+using Assets.Scripts.PropertyAttributes;
 using Assets.Scripts.Utilities.Saving;
 using UnityEngine;
 
@@ -7,7 +10,9 @@ namespace Assets.Scripts.Controllers.Player
 {
     public class PlayerController : MonoBehaviour, ISaveable
     {
-        public int Id => gameObject.GetInstanceID();
+        [field: SerializeField]
+        [field: BeginReadOnlyGroup, AutoGenerateId, EndReadOnlyGroup]
+        public string Id { get; private set; }
 
 
         [field: SerializeField]
@@ -24,9 +29,13 @@ namespace Assets.Scripts.Controllers.Player
 
         public void SetItemData(ItemData itemData)
         {
+            var items = Resources.LoadAll<Item>("Items").ToDictionary(i => i.Id, i => i);
+
             var playerData = (PlayerData)itemData;
 
-            Inventory = playerData.Inventory;
+            foreach (var slot in playerData.Slots)
+                Inventory.Add(items[slot.Key], slot.Value);
+
 
             transform.position = playerData.Position;
 
@@ -35,7 +44,7 @@ namespace Assets.Scripts.Controllers.Player
 
         public ItemData GetItemData() => new PlayerData(Id)
         {
-            Inventory = Inventory,
+            Slots = Inventory.Slots.ToDictionary(s => s.Item.Id, s => s.Amount),
             Position = transform.position,
             Rotation = transform.rotation.eulerAngles
         };

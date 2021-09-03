@@ -253,6 +253,7 @@ GameObject:
   - component: {fileID: 9050800273019687776}
   - component: {fileID: 9050800273019687778}
   - component: {fileID: 9050800273019687779}
+  - component: {fileID: 2974012028415925132}
   m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -376,6 +377,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2974012028415925132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9050800273019687777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b459308f3feddec4db6edd9a5f74579e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Key>k__BackingField: LOCK
 --- !u!1 &9050800273028668411
 GameObject:
   m_ObjectHideFlags: 0
@@ -387,6 +401,7 @@ GameObject:
   - component: {fileID: 9050800273028668410}
   - component: {fileID: 9050800273028668412}
   - component: {fileID: 9050800273028668413}
+  - component: {fileID: 4477529762290682803}
   m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -510,6 +525,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4477529762290682803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9050800273028668411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b459308f3feddec4db6edd9a5f74579e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Key>k__BackingField: HACK
 --- !u!1 &9050800273037830815
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,6 +647,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _requiredKey: {fileID: 0}
+  _requiredHackModule: {fileID: 0}
   _settings:
     <PuzzleTime>k__BackingField: 7
     <HandleWidth>k__BackingField: 150
@@ -627,6 +656,14 @@ MonoBehaviour:
     <HandleReverseTime>k__BackingField: 2.5
     <HandleReverseAcceleration>k__BackingField: 1.5
     <HandleReverseSpeed>k__BackingField: 1.25
+    <HandleMovementFunc>k__BackingField:
+      _target: {fileID: 0}
+      _methodName: 
+      _args: []
+      _dynamic: 0
+      _typeName: Assets.Scripts.Data.Puzzles.Doors.DoorMechanicalSettings+MovementFunc,
+        Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      dirty: 0
   _doorHackable: {fileID: 0}
   _doorUI:
     <Canvas>k__BackingField: {fileID: 9050800273172237514}
@@ -646,6 +683,7 @@ GameObject:
   - component: {fileID: 9050800273103575802}
   - component: {fileID: 9050800273103575804}
   - component: {fileID: 9050800273103575805}
+  - component: {fileID: 6765983283451534164}
   m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -769,6 +807,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6765983283451534164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9050800273103575803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b459308f3feddec4db6edd9a5f74579e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Key>k__BackingField: CLOSE
 --- !u!1 &9050800273172237511
 GameObject:
   m_ObjectHideFlags: 0
@@ -928,6 +979,7 @@ GameObject:
   - component: {fileID: 9050800273745779348}
   - component: {fileID: 9050800273745779350}
   - component: {fileID: 9050800273745779351}
+  - component: {fileID: 585262623188498180}
   m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -1051,6 +1103,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &585262623188498180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9050800273745779349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b459308f3feddec4db6edd9a5f74579e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Key>k__BackingField: OPEN
 --- !u!1 &9050800274192133959
 GameObject:
   m_ObjectHideFlags: 0

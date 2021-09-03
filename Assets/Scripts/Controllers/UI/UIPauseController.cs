@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Utilities.Localization;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Controllers.UI
@@ -15,9 +14,10 @@ namespace Assets.Scripts.Controllers.UI
         }
 
 
-        public void Continue()
+        public void Continue(UIGameplayController uiGameplay)
         {
             Toggle();
+            uiGameplay.Toggle();
         }
 
         public void ReturnToLastCheckpoint()
@@ -25,16 +25,15 @@ namespace Assets.Scripts.Controllers.UI
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
-        public void OpenSettings()
+        public void OpenSettings(UISettingsController uiSettings)
         {
-            Debug.Log("OpenSettings");
-            LocalizationController.ChangeLanguage("Ru");
+            uiSettings.Toggle();
+            Disable();
         }
 
         public void ExitToMainMenu()
         {
             Debug.Log("ExitToMainMenu");
-            LocalizationController.ChangeLanguage("en");
         }
     }
 }

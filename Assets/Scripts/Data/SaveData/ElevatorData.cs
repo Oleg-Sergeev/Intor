@@ -1,16 +1,14 @@
-﻿using Assets.Scripts.Utilities.Saving;
-using UnityEngine;
+﻿using System;
 
 namespace Assets.Scripts.Data.SaveData
 {
-    public class ElevatorData : ItemData
+    [Serializable]
+    public class ElevatorData : PositionData
     {
         public bool IsWorking { get; set; }
 
-        public Vector3 Position { get; set; }
 
-
-        public ElevatorData(int id) : base(id)
+        public ElevatorData(string id) : base(id)
         {
         }
     }

@@ -1,52 +1,45 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
+using Assets.Scripts.Utilities.Saving.Saver.Surrogates;
 using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Assets.Scripts.Utilities.Saving.Saver
 {
-    public class JsonSaver : IAsyncSaver
+    public class JsonSaver : BaseSaver
     {
-        private readonly string _directoryPath;
-        private readonly string _filePath;
-
-
         public JsonSaver()
         {
-#if UNITY_EDITOR
-            _directoryPath = $"{Application.dataPath}/Editor/Saves";
-#else
-            _directoryPath = $"{Application.persistentDataPath}/Saves";
-#endif
-            _filePath = $"{_directoryPath}/Save.json";
-            Directory.CreateDirectory(_directoryPath);
+            FilePath = $"{DirectoryPath}/Save.json";
         }
 
 
-        public async Task SaveAsync(GameData saveData)
+        public override async Task SaveAsync(GameData saveData)
         {
             var settings = new JsonSerializerSettings()
             {
                 TypeNameHandling = TypeNameHandling.Auto,
                 Formatting = Formatting.Indented,
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                Converters = new List<JsonConverter>() { new Vector3Converter() }
             };
 
             var json = JsonConvert.SerializeObject(saveData, settings);
 
-            using (var writer = new StreamWriter(_filePath))
+            using (var writer = new StreamWriter(FilePath))
             {
                 await writer.WriteLineAsync(json);
             }
         }
 
-        public async Task<GameData> LoadAsync()
+        public override async Task<GameData> LoadAsync()
         {
-            if (!File.Exists(_filePath)) return new GameData();
+            if (!File.Exists(FilePath)) return new GameData();
 
             var json = "";
 
-            using (var reader = new StreamReader(_filePath))
+            using (var reader = new StreamReader(FilePath))
             {
                 json = await reader.ReadToEndAsync();
             }
@@ -60,7 +53,8 @@ namespace Assets.Scripts.Utilities.Saving.Saver
 
             var settings = new JsonSerializerSettings()
             {
-                TypeNameHandling = TypeNameHandling.Auto
+                TypeNameHandling = TypeNameHandling.Auto,
+                Converters = new List<JsonConverter>() { new Vector3Converter() }
             };
 
             var gameData = JsonConvert.DeserializeObject<GameData>(json, settings);

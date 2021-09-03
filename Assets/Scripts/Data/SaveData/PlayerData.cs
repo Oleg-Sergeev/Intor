@@ -1,11 +1,15 @@
-﻿namespace Assets.Scripts.Data.SaveData
+﻿using System;
+using System.Collections.Generic;
+
+namespace Assets.Scripts.Data.SaveData
 {
+    [Serializable]
     public class PlayerData : PositionData
     {
-        public Inventory Inventory { get; set; }
+        public Dictionary<string, int> Slots { get; set; }
 
 
-        public PlayerData(int id) : base(id)
+        public PlayerData(string id) : base(id)
         {
         }
     }

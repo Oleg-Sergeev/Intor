@@ -4,6 +4,7 @@ using Assets.Scripts.Data.Items;
 using Assets.Scripts.Data.SaveData;
 using Assets.Scripts.Data.UI;
 using Assets.Scripts.Interfaces;
+using Assets.Scripts.PropertyAttributes;
 using Assets.Scripts.Utilities.Localization;
 using Assets.Scripts.Utilities.Saving;
 using UnityEngine;
@@ -12,7 +13,9 @@ namespace Assets.Scripts.Controllers
 {
     public class ItemObjectController : MonoBehaviour, IInteractional, ISaveable
     {
-        public int Id => gameObject.GetInstanceID();
+        [field: SerializeField]
+        [field: BeginReadOnlyGroup, AutoGenerateId, EndReadOnlyGroup]
+        public string Id { get; private set; }
 
 
         private bool _isDeleted;
@@ -62,8 +65,6 @@ namespace Assets.Scripts.Controllers
 
         public void Interact(PlayerController player)
         {
-            _trigger?.Call();
-
             player.Inventory.Add(_item);
 
             FinishInteraction(player);
@@ -71,6 +72,9 @@ namespace Assets.Scripts.Controllers
             gameObject.GetComponent<MeshRenderer>().enabled = false;
 
             _isDeleted = true;
+
+
+            _trigger?.Call();
         }
 
         public void FinishInteraction(PlayerController player)

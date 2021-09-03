@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Data.SaveData;
+using Assets.Scripts.PropertyAttributes;
 using Assets.Scripts.Utilities.Saving;
 using UnityEngine;
 
@@ -6,7 +7,9 @@ namespace Assets.Scripts.Components
 {
     public class LeverComponent : TransformTranslatorComponent, ISaveable
     {
-        public int Id => gameObject.GetInstanceID();
+        [field: SerializeField]
+        [field: BeginReadOnlyGroup, AutoGenerateId, EndReadOnlyGroup]
+        public string Id { get; private set; }
 
         public void SetItemData(ItemData itemData)
         {

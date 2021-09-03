@@ -10,6 +10,7 @@ namespace Assets.Scripts.Data.Items
     {
         private const char TextSeparator = ';';
 
+
         [field: SerializeField]
         public string Key { get; private set; }
 
@@ -27,8 +28,6 @@ namespace Assets.Scripts.Data.Items
 
         [field: SerializeField]
         public Sprite Icon { get; private set; }
-
-
 
 
         public void Localize(string localizedText)

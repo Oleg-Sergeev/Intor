@@ -3,9 +3,9 @@
 namespace Assets.Scripts.Data.SaveData
 {
     [Serializable]
-    public class LeverData : PositionData
+    public class CameraData : PositionData
     {
-        public LeverData(string id) : base(id)
+        public CameraData(string id) : base(id)
         {
         }
     }

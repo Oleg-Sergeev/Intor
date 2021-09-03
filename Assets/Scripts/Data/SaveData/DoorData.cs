@@ -9,7 +9,7 @@ namespace Assets.Scripts.Data.SaveData
         public int State { get; set; }
 
 
-        public DoorData(int id) : base(id)
+        public DoorData(string id) : base(id)
         {
         }
     }

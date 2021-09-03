@@ -94,7 +94,7 @@ namespace Assets.Scripts.Controllers.UI
 
         private void OnSlotAnyChange(Slot updatedSlot)
         {
-            var inventorySlots = _player.Inventory.GetSlots();
+            var inventorySlots = _player.Inventory.Slots;
 
 
             for (int i = 0; i < inventorySlots.Count; i++)

@@ -1,5 +1,6 @@
 ﻿using System;
 using Assets.Scripts.Extensions;
+using Assets.Scripts.Utilities.Localization;
 using UnityEngine;
 using UnityEngine.UI;
 

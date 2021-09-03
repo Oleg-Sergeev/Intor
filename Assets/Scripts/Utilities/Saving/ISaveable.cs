@@ -2,7 +2,7 @@
 {
     public interface ISaveable
     {
-        int Id { get; }
+        string Id { get; }
 
 
         void SetItemData(ItemData itemData);

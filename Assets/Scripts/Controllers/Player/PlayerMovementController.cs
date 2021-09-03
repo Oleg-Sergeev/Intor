@@ -41,12 +41,12 @@ namespace Assets.Scripts.Controllers.Player
         }
 
 
-        public void Move(Vector3 direction, Action callback = default)
+        public void Move(Vector3 direction, Action callback = default, float? speed = null)
         {
             _rigidbody.MovePosition(transform.position + direction);
         }
 
-        public void Rotate(Quaternion rotation, Action callback = default)
+        public void Rotate(Quaternion rotation, Action callback = default, float? speed = null)
         {
             _rigidbody.MoveRotation(rotation);
         }

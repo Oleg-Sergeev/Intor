@@ -5,10 +5,10 @@ namespace Assets.Scripts.Utilities.Saving
     [Serializable]
     public abstract class ItemData
     {
-        public int Id { get; }
+        public string Id { get; }
 
 
-        public ItemData(int id)
+        public ItemData(string id)
         {
             Id = id;
         }

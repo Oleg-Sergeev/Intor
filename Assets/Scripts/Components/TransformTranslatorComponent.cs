@@ -4,6 +4,7 @@ using System.Threading;
 using Assets.Scripts.Extensions;
 using Assets.Scripts.Interfaces;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Assets.Scripts.Components
 {
@@ -43,7 +44,10 @@ namespace Assets.Scripts.Components
 
 
         [field: SerializeField]
-        protected float Speed { get; set; }
+        protected float MoveSpeed { get; set; }
+
+        [field: SerializeField]
+        protected float RotateSpeed { get; set; }
 
         [field: SerializeField]
         protected bool IsLocalPosition { get; private set; }
@@ -96,8 +100,8 @@ namespace Assets.Scripts.Components
 
         public void MoveToStart() => Move(StartPosition, Callback + CallbackOnStart);
         public void MoveToDestination() => Move(ToPosition, Callback + CallbackOnDestination);
-        public void ResetPosition() => Move(StartPosition, null);
-        public virtual void Move(Vector3 direction, Action callback = default) => Move(direction, Speed, callback, IsLocalPosition);
+        public void ResetPosition() => Move(StartPosition, null, null);
+        public virtual void Move(Vector3 direction, Action callback = default, float? speed = null) => Move(direction, speed ?? MoveSpeed, callback, IsLocalPosition);
         private void Move(Vector3 direction, float speed, Action callback = default, bool isLocalPosition = true)
         {
             _cts.Cancel();
@@ -107,8 +111,8 @@ namespace Assets.Scripts.Components
 
         public void RotateToStart() => Rotate(StartRotation, Callback + CallbackOnStart);
         public void RotateToDestination() => Rotate(Quaternion.Euler(ToRotation), Callback + CallbackOnDestination);
-        public void ResetRotation() => Rotate(StartRotation, null);
-        public virtual void Rotate(Quaternion rotation, Action callback = default) => Rotate(rotation, Speed, callback, IsLocalRotation);
+        public void ResetRotation() => Rotate(StartRotation, null, null);
+        public virtual void Rotate(Quaternion rotation, Action callback = default, float? speed = null) => Rotate(rotation, speed ?? RotateSpeed, callback, IsLocalRotation);
         private void Rotate(Quaternion rotation, float speed, Action callback = default, bool isLocalRotation = true)
         {
             _cts.Cancel();

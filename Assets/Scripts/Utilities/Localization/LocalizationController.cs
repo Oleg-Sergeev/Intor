@@ -23,6 +23,7 @@ namespace Assets.Scripts.Utilities.Localization
 
         public static event Action LanguageChanged;
 
+
         private void Awake()
         {
             if (Instance == null) Instance = this;
@@ -35,7 +36,6 @@ namespace Assets.Scripts.Utilities.Localization
 
             OnValidate();
         }
-
 
         private void Start()
         {
@@ -66,7 +66,11 @@ namespace Assets.Scripts.Utilities.Localization
 
         private void OnValidate()
         {
-            LocalizationPath = $"{Application.streamingAssetsPath}/LocalizationData.csv";
+            LocalizationPath = "Localization/LocalizationData";
+
+#if UNITY_EDITOR
+            ResourcesPath = $"{Application.dataPath}/Resources/{LocalizationPath}.csv";
+#endif
         }
 
 
@@ -83,8 +87,8 @@ namespace Assets.Scripts.Utilities.Localization
         }
 
 
-        private static List<string[]> LoadCsv() =>
-            File.ReadLines(LocalizationPath)
+        private static List<string[]> LoadCsv() => Resources.Load<TextAsset>(LocalizationPath).text
+                .Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries)
                 .Select(HandleLine)
                 .ToList();
 
@@ -102,11 +106,15 @@ namespace Assets.Scripts.Utilities.Localization
             return arr;
         }
 
+
+
 #if UNITY_EDITOR
+        private static string ResourcesPath;
+
         public static char CommaSubstituteEditor => CommaSubstitute;
 
         public static List<string[]> LoadCsvEditor() => LocalizationPath != null ? LoadCsv() : null;
-        public static void SaveCsvEditor(IEnumerable<string> csv) => File.WriteAllLines(LocalizationPath, csv.Select(HandleLineEditor), Encoding.Unicode);
+        public static void SaveCsvEditor(IEnumerable<string> csv) => File.WriteAllLines(ResourcesPath, csv.Select(HandleLineEditor), Encoding.Unicode);
 
 
         private static string HandleLineEditor(string line)

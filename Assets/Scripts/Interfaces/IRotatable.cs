@@ -5,6 +5,6 @@ namespace Assets.Scripts.Interfaces
 {
     public interface IRotatable
     {
-        void Rotate(Quaternion rotation, Action callback = default);
+        void Rotate(Quaternion rotation, Action callback = default, float? speed = null);
     }
 }
